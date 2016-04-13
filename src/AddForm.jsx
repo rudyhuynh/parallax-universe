@@ -9,14 +9,15 @@ class AddForm extends React.Component{
         this.state = {value: ''}
     }
     render(){
-        return <form>
+        return <form onSubmit={(e) => this.add(e)}>
             <input 
                 onChange={(e) => this.onChange(e)}
                 value={this.state.value} />
-            <button type="button" onClick={() => this.add()}>Add</button>
+            <button type="submit">Add</button>
         </form>
     }
-    add(){
+    add(e){
+        e.preventDefault()
         var value = this.state.value;
         if (value != ''){
             this.props.addTodo(value);
