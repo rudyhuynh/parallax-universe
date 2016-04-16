@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import Plane from './Plane';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+let plan = <Plane/>
+ReactDOM.render(plan, document.getElementById('root'));
