@@ -16,9 +16,9 @@ export default class Plane extends React.Component {
     let planeNode = ReactDOM.findDOMNode(this);
     let centerX = planeNode.clientWidth / 2
     let centerY = planeNode.clientHeight / 2
-
-    let fourthQuarter = this.generateInitialStars()
-    let firstQuarter = this.turn90Deg(this.generateInitialStars())
+    let random = true;
+    let fourthQuarter = this.generateInitialStars(random)
+    let firstQuarter = this.turn90Deg(this.generateInitialStars(random))
     let secondQuarter = this.turn90Deg(firstQuarter)
     let thirdQuarter = this.turn90Deg(secondQuarter)
     let stars = [...firstQuarter, ...secondQuarter, ...thirdQuarter, ...fourthQuarter]
@@ -26,16 +26,16 @@ export default class Plane extends React.Component {
     
     this.setState({stars: stars})
   }
-  generateInitialStars(){
+  generateInitialStars(random){
     let stars = []
     for (let x=0; x <= 500; x+=100){
       for (let y=0; y <= 500; y+=100){
         for (let z=0; z <= 200; z+=100){ 
           stars.push({
-            x: Util.getRandomInt(0, x), 
-            y: Util.getRandomInt(0, y), 
-            z: Util.getRandomInt(0, z), 
-            d: Util.getRandomInt(1, 10)
+            x: random ? Util.getRandomInt(0, x) : x, 
+            y: random ? Util.getRandomInt(0, y) : y, 
+            z: random ? Util.getRandomInt(0, z) : z, 
+            d: random ? Util.getRandomInt(1, 10) : 10*(1-z/FURTHEST_DISTANCE)
           })
         }
       }

@@ -12,7 +12,8 @@ class Star extends Component{
 			height: `${d}px`,
 			backgroundColor: 'white',
 			borderRadius: '50%',
-			transform: `translate3d(${x}px, ${y}px, ${z}px)`
+			transform: `translate3d(${x}px, ${y}px, ${z}px)`,
+			//transition: 'transform 1s cubic-bezier(.12,.49,.58,1.03)'
 		}
 		return <div className="noselect" style={style}>
 		</div>
