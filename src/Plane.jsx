@@ -1,8 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Star from './Star'
+import Util from './Util'
 
-const SPEED = 0.01;//(0, 1]
+const SPEED_REDUCE = 0.01;//(0, 1]
+const FURTHEST_DISTANCE = 1000;
 
 export default class Plane extends React.Component {
   constructor(props){
@@ -13,9 +15,13 @@ export default class Plane extends React.Component {
   initStars(){
     let stars = [];
 
-    for (let x=0; x < 1000; x+=100)
-      for (let y=0; y < 1000; y+=100)
-          stars.push({x, y, z:0})  
+    for (let x=0; x <= 1000; x+=100){
+      for (let y=0; y <= 1000; y+=100){
+        for (let z=0; z <= 200; z+=100){
+          stars.push({x, y, z, d: Util.getRandomInt(1, 10)})
+        }
+      }
+    }
 
     this.state = {stars: stars}
   }
@@ -32,16 +38,18 @@ export default class Plane extends React.Component {
     this.pointerData.x0 = e.clientX;
     this.pointerData.y0 = e.clientY;
     this.pointerData.x = 0;
-    this.pointerData.y = 0;  }
+    this.pointerData.y = 0;  
+  }
   onMouseMove(e){
     if (this.pointerData.isDraging){
       this.pointerData.dx = e.clientX - this.pointerData.x0;
       this.pointerData.dy = e.clientY - this.pointerData.y0;
       this.moveStars()
-      let edge = this.nearTheEdge()
-      if (edge){
-        this.generateEdgeStars(edge)
-      }
+      //TODO
+      //let edge = this.nearTheEdge()
+      //if (edge){
+      //  this.generateEdgeStars(edge)
+      //}
     }
   }
   onMouseUp(e){
@@ -58,15 +66,18 @@ export default class Plane extends React.Component {
 
     let newStars = []
     for (let star of stars){
-      let {x, y, z} = star
+      let {x, y, z, d} = star
       let newPos = {}
-      newPos.x = x - dx*SPEED
-      newPos.y = y - dy*SPEED
+      let alpha = SPEED_REDUCE*(1-z/FURTHEST_DISTANCE)
+      newPos.x = x - dx*alpha
+      newPos.y = y - dy*alpha
       newPos.z = z
+      newPos.d = d
       newStars.push(newPos)
     }
     this.setState({stars: newStars})
   }
+  //TODO
   nearTheEdge(){
     let planeDOMNode = ReactDOM.findDOMNode(this)
     let planeWidth = planeDOMNode.offsetWidth
@@ -74,6 +85,7 @@ export default class Plane extends React.Component {
     let {dx, dy} = this.pointerData
     //if (dx > 0 & dx > )
   }
+  //TODO
   generateEdgeStars(edge){
 
   }

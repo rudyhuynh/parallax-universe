@@ -5,11 +5,11 @@ class Star extends Component{
 		super(props)
 	}
 	render(){
-		let {x, y, z} = this.props;
+		let {x, y, z, d} = this.props;
 		let style = {
 			position: 'absolute',
-			width: '10px',
-			height: '10px',
+			width: `${d}px`,
+			height: `${d}px`,
 			backgroundColor: 'white',
 			borderRadius: '50%',
 			transform: `translate3d(${x}px, ${y}px, ${z}px)`
@@ -22,7 +22,12 @@ class Star extends Component{
 Star.propTypes = {
 	x: PropTypes.number.isRequired,
 	y: PropTypes.number.isRequired,
-	z: PropTypes.number.isRequired
+	z: PropTypes.number.isRequired,
+	d: PropTypes.number
+}
+
+Star.defaultProps = {
+	d: 10
 }
 
 export default Star
