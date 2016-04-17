@@ -4,7 +4,7 @@ import Star from './Star'
 import Util from './Util'
 
 const SPEED_REDUCE = 0.01;//(0, 1]
-const FURTHEST_DISTANCE = 500;
+const FURTHEST_DISTANCE = 300;
 
 export default class Plane extends React.Component {
   constructor(props){
@@ -16,9 +16,9 @@ export default class Plane extends React.Component {
     let planeNode = ReactDOM.findDOMNode(this);
     let centerX = planeNode.clientWidth / 2
     let centerY = planeNode.clientHeight / 2
-    let random = true;
-    let fourthQuarter = this.generateInitialStars(random)
-    let firstQuarter = this.turn90Deg(this.generateInitialStars(random))
+    
+    let fourthQuarter = this.generateInitialStars()
+    let firstQuarter = this.turn90Deg(this.generateInitialStars())
     let secondQuarter = this.turn90Deg(firstQuarter)
     let thirdQuarter = this.turn90Deg(secondQuarter)
     let stars = [...firstQuarter, ...secondQuarter, ...thirdQuarter, ...fourthQuarter]
@@ -26,17 +26,21 @@ export default class Plane extends React.Component {
     
     this.setState({stars: stars})
   }
-  generateInitialStars(random){
+  generateInitialStars(){
+    let planeNode = ReactDOM.findDOMNode(this);
+    let cW = planeNode.clientWidth
+    let cH = planeNode.clientHeight
     let stars = []
     for (let x=0; x <= 500; x+=100){
       for (let y=0; y <= 500; y+=100){
         for (let z=0; z <= 200; z+=100){ 
-          stars.push({
-            x: random ? Util.getRandomInt(0, x) : x, 
-            y: random ? Util.getRandomInt(0, y) : y, 
-            z: random ? Util.getRandomInt(0, z) : z, 
-            d: random ? Util.getRandomInt(1, 10) : 10*(1-z/FURTHEST_DISTANCE)
-          })
+          let r = Util.getRandomArbitrary(0, Math.sqrt(cW*cW + cH*cH))
+          let alpha = Util.getRandomArbitrary(0, Math.PI/2)
+          let x = r*Math.cos(alpha)
+          let y = r*Math.sin(alpha)
+          let z = Util.getRandomInt(0, z)
+          let d = Util.getRandomInt(2, 10)//(1-z/FURTHEST_DISTANCE)*10
+          stars.push({x, y, z, d})
         }
       }
     }
