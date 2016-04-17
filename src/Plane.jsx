@@ -4,30 +4,75 @@ import Star from './Star'
 import Util from './Util'
 
 const SPEED_REDUCE = 0.01;//(0, 1]
-const FURTHEST_DISTANCE = 1000;
+const FURTHEST_DISTANCE = 500;
 
 export default class Plane extends React.Component {
   constructor(props){
     super(props)
-    this.pointerData = {x: 0, y: 0, x0: 0, y0: 0}; 
-    this.initStars();
+    this.state = {stars: []}
+    this.pointerData = {x: 0, y: 0, x0: 0, y0: 0};
   }
   initStars(){
-    let stars = [];
+    let planeNode = ReactDOM.findDOMNode(this);
+    let centerX = planeNode.clientWidth / 2
+    let centerY = planeNode.clientHeight / 2
 
-    for (let x=0; x <= 1000; x+=100){
-      for (let y=0; y <= 1000; y+=100){
-        for (let z=0; z <= 200; z+=100){
-          stars.push({x, y, z, d: Util.getRandomInt(1, 10)})
+    let fourthQuarter = this.generateInitialStars()
+    let firstQuarter = this.turn90Deg(this.generateInitialStars())
+    let secondQuarter = this.turn90Deg(firstQuarter)
+    let thirdQuarter = this.turn90Deg(secondQuarter)
+    let stars = [...firstQuarter, ...secondQuarter, ...thirdQuarter, ...fourthQuarter]
+    stars = this.moveToCenter(stars, centerX, centerY)
+    
+    this.setState({stars: stars})
+  }
+  generateInitialStars(){
+    let stars = []
+    for (let x=0; x <= 500; x+=100){
+      for (let y=0; y <= 500; y+=100){
+        for (let z=0; z <= 200; z+=100){ 
+          stars.push({
+            x: Util.getRandomInt(0, x), 
+            y: Util.getRandomInt(0, y), 
+            z: Util.getRandomInt(0, z), 
+            d: Util.getRandomInt(1, 10)
+          })
         }
       }
     }
-
-    this.state = {stars: stars}
+    return stars
   }
+  moveToCenter(stars, centerX, centerY){
+    let newStars = []
+    for (let star of stars){
+      let {x, y, z, d} = star
+      newStars.push({
+        x: x + centerX,
+        y: y + centerY,
+        z, d
+      })
+    }
+    console.log('in generate fourth quarter:', newStars.length);
+    return newStars
+  }
+  turn90Deg(stars){
+    let newStars = []
+    for (let star of stars){
+      let {x, y, z, d} = star
+      console.log(x, y, z, d)
+      newStars.push({
+        x: -y,
+        y: x,
+        z, d
+      })
+    }
+    return newStars
+  }
+
   componentDidMount(){
     window.addEventListener('mouseup', (e) => this.onMouseUp(e))
     window.addEventListener('mousemove', (e) => this.onMouseMove(e))
+    this.initStars();
   }
   componentWillUnmount(){
     window.removeEventListener('mouseup')

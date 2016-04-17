@@ -14,7 +14,9 @@
     "url": "https://github.com/rudyhuynh/parallax-universe.git"
   },
   "keywords": [
-    "react","parallax","universe"
+    "react",
+    "parallax",
+    "universe"
   ],
   "author": "Rudy Huynh <rudy.huynh286@gmail.com> (http://github.com/rudyhuynh)",
   "license": "MIT",
