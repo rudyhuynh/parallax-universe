@@ -39,7 +39,7 @@ export default class Plane extends React.Component {
           let x = r*Math.cos(alpha)
           let y = r*Math.sin(alpha)
           let z = Util.getRandomInt(0, z)
-          let d = Util.getRandomInt(2, 10)//(1-z/FURTHEST_DISTANCE)*10
+          let d = Util.getRandomInt(2, 40)//(1-z/FURTHEST_DISTANCE)*10
           stars.push({x, y, z, d})
         }
       }
@@ -56,14 +56,12 @@ export default class Plane extends React.Component {
         z, d
       })
     }
-    console.log('in generate fourth quarter:', newStars.length);
     return newStars
   }
   turn90Deg(stars){
     let newStars = []
     for (let star of stars){
       let {x, y, z, d} = star
-      console.log(x, y, z, d)
       newStars.push({
         x: -y,
         y: x,

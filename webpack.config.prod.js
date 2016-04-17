@@ -6,6 +6,9 @@ module.exports = {
   entry: [
     './src/index'
   ],
+  resolve: {
+      extensions: ["", ".es6", ".es", ".jsx", ".js"]
+  },
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
