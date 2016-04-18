@@ -12,7 +12,7 @@ app.set('port', (process.env.PORT || 5000));
 //   noInfo: true,
 //   publicPath: config.output.publicPath
 // }));
-
+//
 app.use(express.static(__dirname+'/static'));
 app.set('views', __dirname+'/views');
 app.set('view engine', 'ejs');
