@@ -38,8 +38,9 @@
     "webpack-hot-middleware": "^2.6.0"
   },
   "dependencies": {
+    "ejs": "^2.4.1",
+    "express": "^4.13.3",
     "react": "^0.14.7",
-    "react-dom": "^0.14.7",
-    "express": "^4.13.3"
+    "react-dom": "^0.14.7"
   }
 }
