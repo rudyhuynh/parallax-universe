@@ -32,7 +32,6 @@
     "eslint-plugin-babel": "^3.0.0",
     "eslint-plugin-react": "^3.11.3",
     "eventsource-polyfill": "^0.9.6",
-    "express": "^4.13.3",
     "rimraf": "^2.4.3",
     "webpack": "^1.12.9",
     "webpack-dev-middleware": "^1.4.0",
@@ -40,6 +39,7 @@
   },
   "dependencies": {
     "react": "^0.14.7",
-    "react-dom": "^0.14.7"
+    "react-dom": "^0.14.7",
+    "express": "^4.13.3",
   }
 }
