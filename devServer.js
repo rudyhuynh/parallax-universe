@@ -26,5 +26,5 @@ app.listen(app.get('port'), 'localhost', function(err) {
     return;
   }
 
-  console.log('Listening at http://localhost:80');
+  console.log('Listening at http://localhost:'+app.get('port'));
 });
