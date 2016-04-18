@@ -4,6 +4,8 @@ var express = require('express');
 //var config = require('./webpack.config.dev');
 
 var app = express();
+
+app.set('port', (process.env.PORT || 5000));
 //var compiler = webpack(config);
 
 // app.use(require('webpack-dev-middleware')(compiler, {
@@ -11,14 +13,14 @@ var app = express();
 //   publicPath: config.output.publicPath
 // }));
 
-app.use(express.static('static'))
+app.use(express.static(__dirname+'/static'))
 //app.use(require('webpack-hot-middleware')(compiler));
 
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.listen(80, 'localhost', function(err) {
+app.listen(app.get('port'), 'localhost', function(err) {
   if (err) {
     console.log(err);
     return;
