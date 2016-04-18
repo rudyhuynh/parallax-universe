@@ -2,7 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  devtool: 'source-map',
+  //devtool: 'source-map',
   entry: [
     './src/index'
   ],
@@ -10,7 +10,7 @@ module.exports = {
       extensions: ["", ".es6", ".es", ".jsx", ".js"]
   },
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, 'static'),
     filename: 'bundle.js',
     publicPath: '/static/'
   },
@@ -24,12 +24,13 @@ module.exports = {
     new webpack.optimize.UglifyJsPlugin({
       compressor: {
         warnings: false
-      }
+      },
+      output: {comments: false}
     })
   ],
   module: {
     loaders: [{
-      test: /\.js$/,
+      test: /\.jsx?/,
       loaders: ['babel'],
       include: path.join(__dirname, 'src')
     }]

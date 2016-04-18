@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom'
 import Star from './Star'
 import Util from './Util'
 
-const SPEED_REDUCE = 0.01;//(0, 1]
-const FURTHEST_DISTANCE = 300;
+const SPEED_REDUCE = 0.05;//(0, 1]
+const FURTHEST_DISTANCE = 200;
 
 export default class Plane extends React.Component {
   constructor(props){
@@ -28,8 +28,8 @@ export default class Plane extends React.Component {
   }
   generateInitialStars(){
     let planeNode = ReactDOM.findDOMNode(this);
-    let cW = planeNode.clientWidth
-    let cH = planeNode.clientHeight
+    let cW = planeNode.clientWidth*2
+    let cH = planeNode.clientHeight*2
     let stars = []
     for (let x=0; x <= 500; x+=100){
       for (let y=0; y <= 500; y+=100){
@@ -92,21 +92,19 @@ export default class Plane extends React.Component {
       this.pointerData.dx = e.clientX - this.pointerData.x0;
       this.pointerData.dy = e.clientY - this.pointerData.y0;
       this.moveStars()
-      //TODO
-      //let edge = this.nearTheEdge()
-      //if (edge){
-      //  this.generateEdgeStars(edge)
-      //}
     }
   }
   onMouseUp(e){
+    //move a little bit
+    this.moveStars(true)
+
     this.pointerData.isDraging = false;
     this.pointerData.x = 0;
     this.pointerData.y = 0;
     this.pointerData.x0 = 0;
     this.pointerData.y0 = 0;
   }
-  moveStars(){
+  moveStars(transition = false){
     let stars = this.state.stars
     let pointerData = this.pointerData
     let {dx, dy} = pointerData
@@ -120,21 +118,10 @@ export default class Plane extends React.Component {
       newPos.y = y - dy*alpha
       newPos.z = z
       newPos.d = d
+      newPos.transition = transition
       newStars.push(newPos)
     }
     this.setState({stars: newStars})
-  }
-  //TODO
-  nearTheEdge(){
-    let planeDOMNode = ReactDOM.findDOMNode(this)
-    let planeWidth = planeDOMNode.offsetWidth
-    let planeHeight = planeDOMNode.offsetHeight
-    let {dx, dy} = this.pointerData
-    //if (dx > 0 & dx > )
-  }
-  //TODO
-  generateEdgeStars(edge){
-
   }
   render() {
     let style = {

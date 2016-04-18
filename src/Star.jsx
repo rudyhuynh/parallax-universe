@@ -12,7 +12,7 @@ class Star extends Component{
 	}
 	render(){
 		let starImgUrl = starImgUrls[0]//starImgUrls[Util.getRandomInt(0, starImgUrls.length-1)]
-		let {x, y, z, d} = this.props;
+		let {x, y, z, d, transition} = this.props;
 		let style = {
 			position: 'absolute',
 			width: `${d}px`,
@@ -23,6 +23,9 @@ class Star extends Component{
 			//borderRadius: '50%',
 			transform: `translate3d(${x}px, ${y}px, ${z}px)`,
 			//transition: 'transform 1s cubic-bezier(.12,.49,.58,1.03)'
+		}
+		if (transition){
+			style.transition = 'transform 500ms cubic-bezier(0,.56,0,1)'
 		}
 		return <div className="noselect" style={style}>
 		</div>
